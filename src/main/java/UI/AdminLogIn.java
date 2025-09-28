@@ -1,5 +1,4 @@
 package UI;
-
 import dao.VehicleDao;
 import exception.ExceptionMessages;
 import exception.SystemException;
@@ -10,7 +9,6 @@ import model.vehicle.Helicopter;
 import model.vehicle.Motorcycle;
 import model.vehicle.VehicleBase;
 import service.VehicleService;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -44,7 +42,7 @@ public class AdminLogIn {
                         listVehicle(s,user);
                         break;
                     case "5":
-                        LogIn.logInstart();
+                        StartPage.startingPage();
                         break;
                     default:
                         System.out.println("Invalid option!");
@@ -54,11 +52,6 @@ public class AdminLogIn {
             throw new RuntimeException(e);
         }
 
-
-    }
-
-
-    private static void filterVehicle() {
 
     }
 
@@ -82,7 +75,6 @@ public class AdminLogIn {
                         }
                     }
             }
-
 
     private static void printVehicleInfo(VehicleBase vb){
         System.out.print(vb.getId() + " | " + vb.getVehicleType() + " | " + vb.getVehiclemodel() +
@@ -244,84 +236,100 @@ public class AdminLogIn {
         VehicleDao vehicleDao = new VehicleDao();
         VehicleService vehicleService = new VehicleService(vehicleDao);
 
-        System.out.println("Enter the vehicle model: ");
-        String vehicleModel = s.nextLine();
-        System.out.println("Enter the vehicle type (Car/Helicopter/Motorcycle): ");
-        String vehicleType = s.nextLine();
-        System.out.println("Enter the Hourly Price: ");
-        Double hourlyPrice = s.nextDouble();
-        System.out.println("Enter the Daily Price: ");
-        Double dailyPrice = s.nextDouble();
-        System.out.println("Enter the Weekly Price: ");
-        Double weeklyPrice = s.nextDouble();
-        System.out.println("Enter the Monthly Price: ");
-        Double monthlyPrice = s.nextDouble();
-        s.nextLine();
+        // String girişleri için yardımcı method
+        String vehicleModel = readNonEmptyString(s, "Enter the vehicle model: ");
+        String vehicleType = readNonEmptyString(s, "Enter the vehicle type (Car/Helicopter/Motorcycle): ").toLowerCase();
 
-         if(vehicleType.trim().toLowerCase().equals("car")){
-             System.out.println("Enter car Plate: ");
-             String carPlate = s.nextLine();
+        // Double girişleri için yardımcı method
+        double hourlyPrice = readPositiveDouble(s, "Enter the Hourly Price: ");
+        double dailyPrice = readPositiveDouble(s, "Enter the Daily Price: ");
+        double weeklyPrice = readPositiveDouble(s, "Enter the Weekly Price: ");
+        double monthlyPrice = readPositiveDouble(s, "Enter the Monthly Price: ");
+        double vehiclePrice = readPositiveDouble(s, "Enter the Vehicle Price: ");
 
-             Car car = new Car();
-             car.setVehiclemodel(vehicleModel);
-             car.setVehicleType(vehicleType);
-             car.setHourlyPrice(hourlyPrice);
-             car.setDailyPrice(dailyPrice);
-             car.setWeeklyPrice(weeklyPrice);
-             car.setMonthlyPrice(monthlyPrice);
-             car.setCarPlateNumber(carPlate);
-             car.setAvailable(VehicleAvailable.AVAILABLE);
+        switch(vehicleType) {
+            case "car" -> {
+                String carPlate = readNonEmptyString(s, "Enter car Plate: ");
 
-             vehicleService.vehicleSave(car,user);
-             System.out.println("Successfully Added!");
-         }
+                Car car = new Car();
+                car.setVehiclemodel(vehicleModel);
+                car.setVehicleType(vehicleType);
+                car.setHourlyPrice(hourlyPrice);
+                car.setDailyPrice(dailyPrice);
+                car.setWeeklyPrice(weeklyPrice);
+                car.setMonthlyPrice(monthlyPrice);
+                car.setCarPlateNumber(carPlate);
+                car.setAvailable(VehicleAvailable.AVAILABLE);
 
-         if(vehicleType.trim().toLowerCase().equals("helicopter")){
-             System.out.println("Enter helicopter Serial Number: ");
-             String helicopterSerialNumber = s.nextLine();
-             System.out.println("Enter helicopter Purpose(Transportation or Private use): ");
-             String helicopterPurpose = s.nextLine().toLowerCase().trim();
+                vehicleService.vehicleSave(car,user);
+            }
+            case "helicopter" -> {
+                String helicopterSerialNumber = readNonEmptyString(s, "Enter helicopter Serial Number: ");
+                String helicopterPurpose = readNonEmptyString(s, "Enter helicopter Purpose (Transportation or Private use): ").toLowerCase();
 
-             Helicopter helicopter = new Helicopter();
-             helicopter.setVehiclemodel(vehicleModel);
-             helicopter.setVehicleType(vehicleType);
-             helicopter.setHourlyPrice(hourlyPrice);
-             helicopter.setDailyPrice(dailyPrice);
-             helicopter.setWeeklyPrice(weeklyPrice);
-             helicopter.setMonthlyPrice(monthlyPrice);
-             helicopter.setSerialNumber(helicopterSerialNumber);
-             helicopter.setAvailable(VehicleAvailable.AVAILABLE);
-             helicopter.setPurpose(helicopterPurpose);
+                Helicopter helicopter = new Helicopter();
+                helicopter.setVehiclemodel(vehicleModel);
+                helicopter.setVehicleType(vehicleType);
+                helicopter.setHourlyPrice(hourlyPrice);
+                helicopter.setDailyPrice(dailyPrice);
+                helicopter.setWeeklyPrice(weeklyPrice);
+                helicopter.setMonthlyPrice(monthlyPrice);
+                helicopter.setSerialNumber(helicopterSerialNumber);
+                helicopter.setAvailable(VehicleAvailable.AVAILABLE);
+                helicopter.setPurpose(helicopterPurpose);
 
-             vehicleService.vehicleSave(helicopter,user);
-             System.out.println("Successfully Added!");
+                vehicleService.vehicleSave(helicopter,user);
+            }
+            case "motorcycle" -> {
+                String motorVehicleType = readNonEmptyString(s, "Enter the motor Type: ");
+                String plateNumber = readNonEmptyString(s, "Enter the motor Plate Number: ");
 
-         }
+                Motorcycle motorcycle = new Motorcycle();
+                motorcycle.setVehiclemodel(vehicleModel);
+                motorcycle.setVehicleType(vehicleType);
+                motorcycle.setHourlyPrice(hourlyPrice);
+                motorcycle.setDailyPrice(dailyPrice);
+                motorcycle.setWeeklyPrice(weeklyPrice);
+                motorcycle.setMonthlyPrice(monthlyPrice);
+                motorcycle.setMotortype(motorVehicleType);
+                motorcycle.setMplatenumber(plateNumber);
+                motorcycle.setAvailable(VehicleAvailable.AVAILABLE);
 
-         if(vehicleType.trim().toLowerCase().equals("motorcycle")){
-             System.out.println("Enter the motor Type");
-             String motorVehicleType = s.nextLine();
-             System.out.println("Enter the motor Plate Number");
-             String plateNumber = s.nextLine();
+                vehicleService.vehicleSave(motorcycle,user);
+            }
+            default -> System.out.println("Unknown vehicle type. Please enter Car, Helicopter, or Motorcycle.");
+        }
+    }
 
-             Motorcycle motorcycle = new Motorcycle();
-             motorcycle.setVehiclemodel(vehicleModel);
-             motorcycle.setVehicleType(vehicleType);
-             motorcycle.setHourlyPrice(hourlyPrice);
-             motorcycle.setDailyPrice(dailyPrice);
-             motorcycle.setWeeklyPrice(weeklyPrice);
-             motorcycle.setMonthlyPrice(monthlyPrice);
-             motorcycle.setMotortype(motorVehicleType);
-             motorcycle.setMplatenumber(plateNumber);
-             motorcycle.setAvailable(VehicleAvailable.AVAILABLE);
+    private static String readNonEmptyString(Scanner s, String message) {
+        String input;
+        do {
+            System.out.print(message);
+            input = s.nextLine().trim();
+            if(input.isEmpty()) {
+                System.out.println("Value cannot be empty. Please try again.");
+            }
+        } while(input.isEmpty());
+        return input;
+    }
 
-
-             vehicleService.vehicleSave(motorcycle,user);
-             System.out.println("Successfully Added!");
-
-
-         }
-
+    private static double readPositiveDouble(Scanner s, String message) {
+        double value = -1;
+        do {
+            System.out.print(message);
+            if(s.hasNextDouble()) {
+                value = s.nextDouble();
+                if(value < 0) {
+                    System.out.println("Value must be positive. Try again.");
+                    value = -1;
+                }
+            } else {
+                System.out.println("Invalid number. Try again.");
+                s.next(); // hatalı girişi at
+            }
+        } while(value < 0);
+        s.nextLine(); // Scanner buffer temizleme
+        return value;
     }
 }
 

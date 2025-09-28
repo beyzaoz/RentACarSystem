@@ -5,10 +5,9 @@ import model.enums.Roles;
 import service.UserService;
 import util.PasswordUtil;
 
-import java.time.LocalDate;
 import java.util.Scanner;
 
-public class CustomerRegistration {
+public class Registration {
 
     public static void startReg(){
         registration(new Scanner(System.in));

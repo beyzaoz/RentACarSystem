@@ -1,12 +1,11 @@
 package service;
-
 import dao.VehicleDao;
 import exception.ExceptionMessages;
 import exception.SystemException;
 import model.User;
 import model.enums.Roles;
 import model.vehicle.VehicleBase;
-
+import java.math.BigDecimal;
 import java.util.List;
 
 public class VehicleService {
@@ -44,8 +43,7 @@ public class VehicleService {
         }
 
         vehicle.setUpdatedUser(user.getId()); //who updated
-        vehicleDao.delete(vehicle, vehicle.getId());
-        System.out.println("Vehicle Deleted!"); //todo vehicledao-delete e tasi
+        vehicleDao.delete(vehicle.getId());
     }
 
     public void vehicleListed(VehicleBase vehicle, User user) throws SystemException{
@@ -62,7 +60,16 @@ public class VehicleService {
         if(!Roles.COOPARATE_CUSTOMER.equals(user.getRole()) && !Roles.INDIVIDUAL_CUSTOMER.equals(user.getRole())){
             throw  new SystemException(ExceptionMessages.USER_NOT_CUSTOMER);
         }
+        VehicleDao vehicleDao = new VehicleDao();
         return vehicleDao.findById(vehicleID);
+
+    }
+
+    public List<VehicleBase> vehicleSearchByBrand(String vehicleBrand, User user) throws SystemException {
+        if(!Roles.COOPARATE_CUSTOMER.equals(user.getRole()) && !Roles.INDIVIDUAL_CUSTOMER.equals(user.getRole())){
+            throw  new SystemException(ExceptionMessages.USER_NOT_CUSTOMER);
+        }
+        return vehicleDao.searchByBrand(vehicleBrand);
 
     }
 
@@ -70,11 +77,23 @@ public class VehicleService {
         if(!Roles.COOPARATE_CUSTOMER.equals(user.getRole()) && !Roles.INDIVIDUAL_CUSTOMER.equals(user.getRole())){
             throw  new SystemException(ExceptionMessages.USER_NOT_CUSTOMER);
         }
-        return vehicleDao.search(vehicletype);
+        return vehicleDao.searchByType(vehicletype);
     }
 
 
+    public List<VehicleBase> vehicleSearchByPrice(String rentalType, BigDecimal minPrice, BigDecimal maxPrice, User user) throws SystemException {
+        if(!Roles.COOPARATE_CUSTOMER.equals(user.getRole()) && !Roles.INDIVIDUAL_CUSTOMER.equals(user.getRole())){
+            throw  new SystemException(ExceptionMessages.USER_NOT_CUSTOMER);
+        }
+        return vehicleDao.searchByPrice(rentalType,minPrice,maxPrice);
+
     }
+
+
+
+
+
+}
 
 
 

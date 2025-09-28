@@ -2,11 +2,10 @@ package exception;
 
 public class ExceptionMessages {
 
-    public static final String CAR_VEHICLE_LISTED_FAILED = "Car Listed Failed!";
-    public static final String HELICOPTER_VEHICLE_LISTED_FAILED = "Helicopter Listed Failed!";
-    public static final String MOTORCYCLE_VEHICLE_LISTED_FAILED = "Motorcycle Listed Failed!";
-    public static final String ALL_VEHICLE_LISTED_FAILED = " All Listed Failed!";
-    public static final String USER_NOT_CUSTOMER = "User is not Customer!!";
+
+    public static final String SEARCHED_WITH_TYPE_ERROR = "System Error!";
+    public static String INPUT_MISMATCH_ERROR = "Invalid input! Please enter a number.";
+    public static String SEARCHED_WITH_BY_ID_ERROR ="System Error!";
 
     public ExceptionMessages() {
     }
@@ -17,8 +16,9 @@ public class ExceptionMessages {
     public final static String USER_NOT_ADMIN = "User!s role is NOT ADMIN! ";
     public static final String LOGIN_FAILED = "LOGIN FAILED";
     public static final String ILLEGAL_VEHICLE_TYPE = "Unknown vehicle type: " ;
-    public static final String NO_ID_FOUNDED ="No vehicle found with id: " ;
     public static final String INVALID_UPDATE ="Invalid Update. Please Make sure you answered all questions." ;
-    public static final String INVALID_DELETE ="Invalid delete. Please try again." ;
+    public static final String USER_NOT_CUSTOMER = "User is not Customer!!";
+
+
 
 }

@@ -14,10 +14,10 @@ public class UserDAO implements BaseDao<User> {
 
     public void save(User customer) {
 
-        try(Connection connection = DbUtil.getConnection()){
+        try(Connection connection = DbUtil.getConnection();
+            PreparedStatement ps = connection.prepareStatement(SqlScriptConstant.USER_SAVE)){
 
             //Determine which ? is get  which value
-            PreparedStatement ps = connection.prepareStatement(SqlScriptConstant.USER_SAVE);
             ps.setString(1, customer.getFirst_name());
             ps.setString(2, customer.getLast_name());
             ps.setString(3, customer.getEmail());
@@ -49,7 +49,7 @@ public class UserDAO implements BaseDao<User> {
     }
 
     @Override
-    public void delete(User user ,long id) {
+    public void delete(long id) {
 
     }
 
@@ -80,11 +80,12 @@ public class UserDAO implements BaseDao<User> {
 
     public User findByEmail(String email) {
         User customer = new User();
-        try(Connection connection = DbUtil.getConnection()){
+        try(Connection connection = DbUtil.getConnection();
+            PreparedStatement ps = connection.prepareStatement(SqlScriptConstant.USER_EXIST_EMAIL);){
 
             //JDBC Connections
-            PreparedStatement ps = connection.prepareStatement(SqlScriptConstant.USER_EXIST_EMAIL);
-            ps.setString(1,email);
+
+            ps.setString(1,email.trim());
             ResultSet rs =ps.executeQuery();
             if (rs.next()) {
 
@@ -107,4 +108,5 @@ public class UserDAO implements BaseDao<User> {
         }
         return customer;
     }
+
 }

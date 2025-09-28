@@ -6,32 +6,33 @@ import model.enums.PaymentStatus;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Payment extends BaseModel{
+public class Payment extends BaseModel {
 
-    private Reservation reservation;
+    private Order order;
     private Date paymentDate;
-    private BigDecimal totalamount;
+    private BigDecimal totalAmount;
     private PaymentMethod paymentMethod;
-    private PaymentStatus paymentStatus;//NOT NULL
+    private PaymentStatus paymentStatus; // NOT NULL
+    private BigDecimal deposite;
 
-
-    //CONSTRUCTOR
-    public Payment(Reservation reservation, Date paymentDate, BigDecimal totalamount, PaymentMethod paymentMethod, PaymentStatus paymentStatus) {
-        this.reservation = reservation;
+    // CONSTRUCTOR
+    public Payment(Order order, Date paymentDate, BigDecimal totalAmount, PaymentMethod paymentMethod, PaymentStatus paymentStatus) {
+        this.order = order;
         this.paymentDate = paymentDate;
-        this.totalamount = totalamount;
+        this.totalAmount = totalAmount;
         this.paymentMethod = paymentMethod;
         this.paymentStatus = paymentStatus;
     }
 
-    //GETTER/SETTER
+    public Payment() {}
 
-    public Reservation getReservation() {
-        return reservation;
+    // GETTER / SETTER
+    public Order getOrder() {
+        return order;
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Date getPaymentDate() {
@@ -58,11 +59,19 @@ public class Payment extends BaseModel{
         this.paymentStatus = paymentStatus;
     }
 
-    public BigDecimal getTotalamount() {
-        return totalamount;
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setTotalamount(BigDecimal totalamount) {
-        this.totalamount = totalamount;
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public BigDecimal getDeposite() {
+        return deposite;
+    }
+
+    public void setDeposite(BigDecimal deposite) {
+        this.deposite = deposite;
     }
 }

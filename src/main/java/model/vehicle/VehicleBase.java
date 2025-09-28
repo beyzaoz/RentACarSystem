@@ -6,15 +6,15 @@ import model.enums.VehicleAvailable;
 public class VehicleBase extends BaseModel {
     private double hourlyPrice;
     private double dailyPrice;
-    private double weeklyPrice;//NOT NULL
+    private double weeklyPrice;
     private double monthlyPrice;
     private VehicleAvailable available;
     private String vehicleType;
-    private String vehiclebrand; //NOT NULL
-    //private String serialOrPlateNum;//NOT NULL
+    private String vehiclebrand;
+    private double vehiclePrice;
 
 
-    public VehicleBase(double hourlyPrice, double dailyPrice, double weeklyPrice, double monthlyPrice, VehicleAvailable available, String vehicleType, String vehiclemodel) {
+    public VehicleBase(double hourlyPrice, double dailyPrice, double weeklyPrice, double monthlyPrice, VehicleAvailable available, String vehicleType, String vehiclemodel,double vehiclePrice) {
         this.hourlyPrice = hourlyPrice;
         this.dailyPrice = dailyPrice;
         this.weeklyPrice = weeklyPrice;
@@ -22,6 +22,22 @@ public class VehicleBase extends BaseModel {
         this.available = VehicleAvailable.AVAILABLE;
         this.vehicleType = vehicleType;
         this.vehiclebrand = vehiclemodel;
+    }
+
+    public String getVehiclebrand() {
+        return vehiclebrand;
+    }
+
+    public void setVehiclebrand(String vehiclebrand) {
+        this.vehiclebrand = vehiclebrand;
+    }
+
+    public double getVehiclePrice() {
+        return vehiclePrice;
+    }
+
+    public void setVehiclePrice(double vehiclePrice) {
+        this.vehiclePrice = vehiclePrice;
     }
 
     public VehicleBase() {
@@ -81,5 +97,18 @@ public class VehicleBase extends BaseModel {
 
     public void setVehiclemodel(String vehiclemodel) {
         this.vehiclebrand = vehiclemodel;
+    }
+
+    @Override
+    public String toString() {
+        return "hourlyPrice=" + hourlyPrice +
+                "|| dailyPrice=" + dailyPrice +
+                "|| weeklyPrice=" + weeklyPrice +
+                "|| monthlyPrice=" + monthlyPrice +
+                "|| available=" + available +
+                "|| vehicleType='" + vehicleType +
+                "|| vehiclebrand='" + vehiclebrand +
+                "|| vehiclePrice=" + vehiclePrice
+               ;
     }
 }

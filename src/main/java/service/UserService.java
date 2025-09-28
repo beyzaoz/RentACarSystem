@@ -33,12 +33,12 @@ public class UserService {
         LocalDate date = LocalDate.parse(bDate);
 
         try {
-            User customer = new User(fname,lname,email, PasswordUtil.hash(password), dl,date,role);
+            User customer = new User(fname,lname,email.trim(), PasswordUtil.hash(password), dl,date,role);
             UserDAO.save(customer);
         } catch (Exception e) {
             e.printStackTrace();
         }
-         //TODO empty veya null hata kontrolu
+
 
     }
 
@@ -51,7 +51,7 @@ public class UserService {
             try {
                 throw new SystemException(ExceptionMessages.EMAIL_NOT_EXIST);
             } catch (SystemException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
 
@@ -61,7 +61,7 @@ public class UserService {
         //Paswword check
         boolean pwEquals = foundCustomer.getPassword().equals(hashPassword);
 
-            if(pwEquals){
+            if(!pwEquals){
                 try {
                     throw new SystemException(ExceptionMessages.CUSTOMER_EMAIL_OR_PS_NOT_EXIST);
                 } catch (SystemException e) {
