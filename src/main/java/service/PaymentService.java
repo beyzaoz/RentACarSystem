@@ -20,21 +20,24 @@ public class PaymentService {
         BigDecimal extraDepositPercentage = BigDecimal.valueOf(10); // %10
 
         int age = OrderService.calculateAge(order.getUser().getBirth_date());
+        BigDecimal vehiclePrice = BigDecimal.valueOf(vb.getVehiclePrice());
 
-        // Araç fiyatı > 2.000.000 ve kiralayanın yaşı >= 30 ise %10 depozito
-        if (vb.getVehiclePrice() > 2000000.00) {
+
+        if (vehiclePrice.compareTo(BigDecimal.valueOf(2000000)) > 0) {
             if (age >= 30) {
-                System.out.println("Need to pay EXTRA 10% deposit");
                 baseDepositPercentage = extraDepositPercentage;
+                System.out.println("Vehicle price > 2.000.000 and renter >=30 age need to pay EXTRA 10% deposit");
             } else {
                 System.out.println("Vehicle price > 2.000.000 but renter under 30, deposit is 5%");
             }
+        } else {
+            System.out.println("Vehicle price <= 2.000.000, deposit is 5%");
         }
 
-        // Depozito hesaplama
         BigDecimal deposit = payment.getTotalAmount()
                 .multiply(baseDepositPercentage)
                 .divide(BigDecimal.valueOf(100));
+
 
         return deposit;
     }

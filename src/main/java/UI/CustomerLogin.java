@@ -261,7 +261,7 @@ public class CustomerLogin {
             BigDecimal totalprice = orderService.priceCalc(order);
             payment.setTotalAmount(totalprice);
             order.setTotalAmount(totalprice);
-            BigDecimal deposite = ps.depositCalculation(payment, order, v);
+            BigDecimal deposite = PaymentService.depositCalculation(payment, order, v);
             payment.setDeposite(deposite);
 
             System.out.println("Your Total price is : " + totalprice);
@@ -269,7 +269,8 @@ public class CustomerLogin {
             paymentPage(order, payment, v);
             orderService.createOrder(order, user, id);
         } catch (SystemException e) {
-            System.out.println("Rent is Invalid!");
+            System.out.println(e.getMessage());
+            rentVehicle(user);
         }
 
     }

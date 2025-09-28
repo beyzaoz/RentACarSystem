@@ -67,6 +67,7 @@ public class OrderService {
                 case "hourly":
                     if(order.getUser().getRole().equals(Roles.COOPARATE_CUSTOMER)){
                         throw new SystemException("Corporate customers must rent at least one month!");
+
                     }
 
                     long totalHours = Duration.between(order.getStartDateTime(), order.getEndDateTime()).toHours();
@@ -115,7 +116,7 @@ public class OrderService {
     public int calculateTotalDuration(Order order) {
         if (order.getStartDateTime() == null || order.getEndDateTime() == null) return 0;
 
-        String rentalType = order.getRentalType(); // Order sınıfına eklemiş olmalı
+        String rentalType = order.getRentalType();
         switch (rentalType.toLowerCase()) {
             case "hourly":
                 long hours = Duration.between(order.getStartDateTime(), order.getEndDateTime()).toHours();

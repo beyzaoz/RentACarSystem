@@ -125,6 +125,7 @@ public class VehicleDao implements BaseDao<VehicleBase>{
                     car.setMonthlyPrice(rs.getDouble("monthlyprice"));
                     car.setAvailable(parseVehicleAvailable(rs.getString("vehicleavailable")));
                     car.setCarPlateNumber(rs.getString("vehicleplatenumber"));
+                    car.setVehiclePrice(rs.getDouble("vehicle_price"));
                     return car;
                 }}
 
@@ -149,6 +150,7 @@ public class VehicleDao implements BaseDao<VehicleBase>{
                     helicopter.setAvailable(VehicleAvailable.valueOf(rs.getString("vehicleavailable")));
                     helicopter.setSerialNumber(rs.getString("serialnumber"));
                     helicopter.setPurpose(rs.getString("purpose"));
+                    helicopter.setVehiclePrice(rs.getDouble("vehicle_price"));
                     return helicopter;
                 }
                }
@@ -171,6 +173,7 @@ public class VehicleDao implements BaseDao<VehicleBase>{
                     motorcycle.setAvailable(VehicleAvailable.valueOf(rs.getString("vehicleavailable")));
                     motorcycle.setMplatenumber(rs.getString("mplatenumber"));
                     motorcycle.setMotortype(rs.getString("motortype"));
+                    motorcycle.setVehiclePrice(rs.getDouble("vehicle_price"));
                     return motorcycle;
 
                 }

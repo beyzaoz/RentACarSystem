@@ -22,6 +22,7 @@ public class VehicleBase extends BaseModel {
         this.available = VehicleAvailable.AVAILABLE;
         this.vehicleType = vehicleType;
         this.vehiclebrand = vehiclemodel;
+        this.vehiclePrice = vehiclePrice;
     }
 
     public String getVehiclebrand() {
